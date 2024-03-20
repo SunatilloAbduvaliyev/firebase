@@ -21,53 +21,49 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF262626),
-      width: double.infinity,
-      child: TextFormField(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        onChanged: (value){
-          context.read<LoginViewModel>().updatePassword(value);
-        },
-        validator: (value) {
-          if (value!.isEmpty) {
-            return null;
-          }
-          return null;
-        },
-        controller: widget.controller,
-        obscureText: isShow,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-        decoration: InputDecoration(
-            labelStyle: const TextStyle(
-              color: Colors.white,
-            ),
-            errorStyle: const TextStyle(
-              color: Colors.red,
-            ),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(
-                  width: 0,
-                  color: Color(0xFF262626),
-                )),
-            labelText: "Password",
-            prefixIcon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset('assets/icons/password.svg'),
-            ),
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  isShow = !isShow;
-                });
-              },
-              icon: Icon(
-                  isShow ? Icons.visibility_off : Icons.remove_red_eye),
-            )),
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value){
+        context.read<LoginViewModel>().updatePassword(value);
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Ma'lumot to'ldiring";
+        }
+        return null;
+      },
+      controller: widget.controller,
+      obscureText: isShow,
+      style: const TextStyle(
+        color: Colors.white,
       ),
+      decoration: InputDecoration(
+          labelStyle: const TextStyle(
+            color: Colors.white,
+          ),
+          errorStyle: const TextStyle(
+            color: Colors.red,
+          ),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                width: 0,
+                color: Color(0xFF262626),
+              )),
+          labelText: "Password",
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SvgPicture.asset('assets/icons/password.svg'),
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                isShow = !isShow;
+              });
+            },
+            icon: Icon(
+                isShow ? Icons.visibility_off : Icons.remove_red_eye),
+          )),
     );
   }
 }

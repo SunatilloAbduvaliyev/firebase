@@ -28,7 +28,7 @@ class LoginViewModel extends ChangeNotifier {
       if (credential.user!.uid.isNotEmpty) {
         debugPrint("UID:${credential.user!.uid}");
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomeScreen();
+          return const HomeScreen();
         }));
       }
     } on FirebaseAuthException catch (e) {

@@ -13,45 +13,38 @@ class EmailFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF262626),
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value){
+        context.read<LoginViewModel>().updateEmail(value);
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Ma'lumotni to'ldiring";
+        }
+        return null;
+      },
+      controller: controller,
+      style: const TextStyle(
+        color: Colors.white,
       ),
-      width: double.infinity,
-      child: TextFormField(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        onChanged: (value){
-          context.read<LoginViewModel>().updateEmail(value);
-        },
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Ma'lumotni to'ldiring";
-          }
-          return null;
-        },
-        controller: controller,
-        style: const TextStyle(
+      decoration: InputDecoration(
+        labelStyle: const TextStyle(
           color: Colors.white,
         ),
-        decoration: InputDecoration(
-          labelStyle: const TextStyle(
-            color: Colors.white,
-          ),
-          errorStyle: const TextStyle(
-            color: Colors.red,
-          ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                width: 0,
-                color: Color(0xFF262626),
-              )),
-          labelText: "Email",
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(10),
-            child: SvgPicture.asset('assets/icons/email.svg'),
-          ),
+        errorStyle: const TextStyle(
+          color: Colors.red,
+        ),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              width: 0,
+              color: Color(0xFF262626),
+            )),
+        labelText: "Email",
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(10),
+          child: SvgPicture.asset('assets/icons/email.svg'),
         ),
       ),
     );
