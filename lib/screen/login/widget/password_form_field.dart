@@ -24,14 +24,14 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
     return Container(
       color: const Color(0xFF262626),
       width: double.infinity,
-      height: 41,
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: (value){
           context.read<LoginViewModel>().updatePassword(value);
         },
         validator: (value) {
           if (value!.isEmpty) {
-            return "Ma'lumotni to'ldiring";
+            return null;
           }
           return null;
         },
@@ -65,7 +65,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                 });
               },
               icon: Icon(
-                  isShow ? Icons.hide_source_outlined : Icons.remove_red_eye),
+                  isShow ? Icons.visibility_off : Icons.remove_red_eye),
             )),
       ),
     );

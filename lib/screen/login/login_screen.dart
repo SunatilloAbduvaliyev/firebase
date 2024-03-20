@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasetask/screen/login/view_model/login_view_model.dart';
 import 'package:firebasetask/screen/login/widget/email_form_field.dart';
 import 'package:firebasetask/screen/login/widget/password_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
+import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,11 +21,22 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isValue = false;
-  List<String> networkLink = [
-    'assets/images/google.png',
-    'assets/images/apple.png',
-    'assets/images/google.png',
-  ];
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
+
+  Future<void> _init() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    Future.microtask(() {
+      if (user != null) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const HomeScreen();
+        }));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 EmailFormField(
                   controller: emailController,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 PasswordFormField(
                   controller: passwordController,
                 ),
@@ -101,7 +115,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: InkWell(
                       borderRadius: BorderRadius.circular(50),
                       onTap: () {
-                        context.read<LoginViewModel>().login(context);
+                        if(_formKey.currentState!.validate()){
+                          context.read<LoginViewModel>().login(context);
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Maydonlarni to'ldiring",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 17),
