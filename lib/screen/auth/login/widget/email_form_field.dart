@@ -1,8 +1,5 @@
-import 'package:firebasetask/screen/login/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
-
 class EmailFormField extends StatelessWidget {
   const EmailFormField({
     super.key,
@@ -15,9 +12,6 @@ class EmailFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      onChanged: (value){
-        context.read<LoginViewModel>().updateEmail(value);
-      },
       validator: (value) {
         if (value!.isEmpty) {
           return "Ma'lumotni to'ldiring";

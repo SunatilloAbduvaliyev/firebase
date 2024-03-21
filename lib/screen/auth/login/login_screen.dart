@@ -1,12 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebasetask/screen/login/view_model/login_view_model.dart';
-import 'package:firebasetask/screen/login/widget/email_form_field.dart';
-import 'package:firebasetask/screen/login/widget/password_form_field.dart';
+import 'package:firebasetask/route.dart';
+import 'package:firebasetask/screen/auth/login/widget/email_form_field.dart';
+import 'package:firebasetask/screen/auth/login/widget/password_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import '../home/home_screen.dart';
+import '../view_model/auth_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,23 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isValue = false;
-  // @override
-  // void initState() {
-  //   _init();
-  //   super.initState();
-  // }
-  //
-  // Future<void> _init() async {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   Future.microtask(() {
-  //     if (user != null) {
-  //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //         return const HomeScreen();
-  //       }));
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -117,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(50),
                         onTap: () {
                           if(_formKey.currentState!.validate()){
-                            context.read<LoginViewModel>().login(context);
+                            context.read<AuthViewModel>().loginUser(context, email: emailController.text, password: passwordController.text);
                           }else{
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -154,9 +135,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, RouteNames.registerRoute);
+                    },
                     child: const Text(
-                      'Log in with',
+                      'Log in with Register',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
@@ -203,7 +186,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ]
                   ),
-              
                 ],
               ),
             ),

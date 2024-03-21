@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../view_model/login_view_model.dart';
-
 class PasswordFormField extends StatefulWidget {
   const PasswordFormField({
     super.key,
@@ -23,9 +21,6 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      onChanged: (value){
-        context.read<LoginViewModel>().updatePassword(value);
-      },
       validator: (value) {
         if (value!.isEmpty) {
           return "Ma'lumot to'ldiring";
